@@ -35,7 +35,7 @@ TELETIPS_MAIN_MENU_BUTTONS = [
             ]
         ]
 
-@bot.on_message(filters.command(['start','help']) & filters.private)
+@bot.on_message(filters.command(['count','helpcount']) & filters.private)
 async def start(client, message):
     text = START_TEXT
     reply_markup = InlineKeyboardMarkup(TELETIPS_MAIN_MENU_BUTTONS)
@@ -47,7 +47,7 @@ async def start(client, message):
 
 @bot.on_callback_query()
 async def callback_query(client: Client, query: CallbackQuery):
-    if query.data=="HELP_CALLBACK":
+    if query.data=="HELPCOUNT_CALLBACK":
         TELETIPS_HELP_BUTTONS = [
             [
                 InlineKeyboardButton("⬅️ BACK", callback_data="START_CALLBACK")
@@ -101,8 +101,8 @@ async def callback_query(client: Client, query: CallbackQuery):
         except MessageNotModified:
             pass      
           
-    elif query.data=="START_CALLBACK":
-        TELETIPS_START_BUTTONS = [
+    elif query.data=="COUNT_CALLBACK":
+        TELETIPS_COUNT_BUTTONS = [
             [
                 InlineKeyboardButton('❓ HELP', callback_data="HELP_CALLBACK")
             ],
@@ -115,7 +115,7 @@ async def callback_query(client: Client, query: CallbackQuery):
                 InlineKeyboardButton('➕ CREATE YOUR BOT ➕', callback_data="TUTORIAL_CALLBACK")
             ]
         ]
-        reply_markup = InlineKeyboardMarkup(TELETIPS_START_BUTTONS)
+        reply_markup = InlineKeyboardMarkup(TELETIPS_COUNT_BUTTONS)
         try:
             await query.edit_message_text(
                 START_TEXT,
